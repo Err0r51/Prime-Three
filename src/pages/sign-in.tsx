@@ -28,7 +28,7 @@ export default function SignIn() {
   const [email, setEmail] = useState<string>('')
   const [submitted, setSubmitted] = useState<boolean>(false)
 
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLInputElement>) => {
     event.preventDefault()
     if (await signIn())
       setSubmitted(true)
