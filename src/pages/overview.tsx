@@ -39,10 +39,7 @@ export default function Overview() {
 
   return (
     <div>
-      <h1>Overview</h1>
       <WashingTable washinglist={washinglist} />
-      <p>Name: {profile.data.user.email}</p>
-      <p>USER ID: {profile.data.user.id}</p>
     </div>
   )
 }

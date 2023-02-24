@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import { ChakraProvider } from '@chakra-ui/react'
 import type { User } from '../types/user'
 import Navbartwo from '@/components/navbar'
+import Footer from '@/components/footer'
 
 export default function App({ Component, pageProps }: AppProps<{ initialSession: Session | null }>) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient())
@@ -24,6 +25,7 @@ export default function App({ Component, pageProps }: AppProps<{ initialSession:
       <ChakraProvider>
       {noNavbar.includes(asPath) ? null : <Navbartwo userobj={testobj} />}
       <Component {...pageProps} />
+      <Footer/>
       </ChakraProvider>
     </SessionContextProvider>
   )
