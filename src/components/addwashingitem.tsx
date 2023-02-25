@@ -37,6 +37,7 @@ export default function AddWashingItem() {
 
   async function handleSubmit() {
     setLoading(true)
+    // TODO: implement proper date fomatting for urgency
     const urgency = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(Date.now())
     const washingItem: washinglist = {
       restricted: genderRestriction,
@@ -74,7 +75,7 @@ export default function AddWashingItem() {
               <Select placeholder='Type' value={washingtype} onChange={ev => setwashingtype(ev.target.value)} isRequired>
                 <option value='White'>White</option>
                 <option value='Underwear'>Underwear</option>
-                <option value='Multi Colored-wash'>Multi Colored-wash</option>
+                <option value='Multi Colored-wash'>Multi Colored</option>
                 <option value='Sheets & Towels'>Sheets & Towels</option>
               </Select>
               <FormLabel htmlFor='gender-restricted' mb='0'>

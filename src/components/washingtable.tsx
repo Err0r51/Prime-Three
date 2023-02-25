@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  Icon,
   Table,
   TableContainer,
   Tbody,
@@ -8,7 +9,9 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react'
+import { RiDeleteBin5Fill } from 'react-icons/ri'
 import type { washinglist } from '../types/supabase'
+import DeleteItem from '@/components/deletewashingitem'
 
 export default function WashingTable(props: { washinglist: washinglist[] }) {
   const washinglist = props.washinglist
@@ -34,6 +37,7 @@ export default function WashingTable(props: { washinglist: washinglist[] }) {
                 <Td>{item.wash_type}</Td>
                 <Td>{item.urgency}</Td>
                 <Td>{item.restricted ? 'Yes' : 'No'}</Td>
+                <Td><DeleteItem id={item.id} washtype={item.wash_type} /></Td>
               </Tr>
             ))}
           </Tbody>

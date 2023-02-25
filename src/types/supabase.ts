@@ -49,6 +49,8 @@ export interface Database {
 }
 
 export interface washinglist {
+  created_at: string | null
+  id: string | null
   restricted: boolean | null
   urgency: string | null
   wash_type: string | null
