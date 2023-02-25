@@ -1,10 +1,8 @@
-import type { ReactNode } from 'react'
 import {
   Box,
   Button,
   Flex,
   Icon,
-  Link,
   Menu,
   Stack,
   useColorMode,
@@ -15,20 +13,6 @@ import { CgSmartHomeWashMachine } from 'react-icons/cg'
 import { useRouter } from 'next/router'
 import { supabase } from '../utils/supabase'
 import type { User } from '../types/user'
-
-const NavLink = ({ children }: { children: ReactNode }) => (
-  <Link
-    px={2}
-    py={1}
-    rounded={'md'}
-    _hover={{
-      textDecoration: 'none',
-      bg: useColorModeValue('gray.200', 'gray.700'),
-    }}
-    href={'#'}>
-    {children}
-  </Link>
-)
 
 export default function Navbartwo({ userobj }: { userobj: User }) {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -60,7 +44,6 @@ export default function Navbartwo({ userobj }: { userobj: User }) {
                   fontWeight={600}
                   color={'white'}
                   bg={'blue.400'}
-                  href={'#'}
                   _hover={{
                     bg: 'blue.600',
                   }} onClick={signOut}>

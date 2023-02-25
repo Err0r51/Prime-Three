@@ -16,19 +16,6 @@ import {
 import { CgSmartHomeWashMachine } from 'react-icons/cg'
 import { supabase } from '../utils/supabase'
 
-// function Copyright(props: any) {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://github.com/Err0r51">
-//         Err0r51
-//       </Link>{' in '}
-//       {new Date().getFullYear()}
-//       {' @ Berkeley'}
-//     </Typography>
-//   )
-// }
-
 export default function SignIn() {
   const [email, setEmail] = useState<string>('')
   const [submitted, setSubmitted] = useState<boolean>(false)

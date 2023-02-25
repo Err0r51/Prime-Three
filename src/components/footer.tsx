@@ -1,4 +1,4 @@
-import { ButtonGroup, Container, Center, IconButton, Stack, Text } from '@chakra-ui/react'
+import { ButtonGroup, Center, Container, IconButton, Stack, Text } from '@chakra-ui/react'
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
 
 export default function Footer() {

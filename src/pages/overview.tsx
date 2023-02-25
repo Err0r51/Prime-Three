@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { supabase } from '../utils/supabase'
 import type { washinglist } from '../types/supabase'
 import WashingTable from '@/components/washingtable'
+import AddWashingItem from '@/components/addwashingitem'
 
 export default function Overview() {
   // const [loading, setLoading] = useState<boolean>(true)
@@ -40,6 +41,7 @@ export default function Overview() {
   return (
     <div>
       <WashingTable washinglist={washinglist} />
+      <AddWashingItem />
     </div>
   )
 }

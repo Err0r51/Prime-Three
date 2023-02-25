@@ -15,6 +15,7 @@ export default function App({ Component, pageProps }: AppProps<{ initialSession:
   const router = useRouter()
   const { asPath } = router
   const noNavbar = ['/sign-in']
+  // TODO: Remove this testobj and pass down real user object
   const testobj: User = { email: 'Frede', id: '123' }
 
   return (
