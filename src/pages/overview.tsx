@@ -1,11 +1,18 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import {
+  Flex,
+} from '@chakra-ui/react'
 import { supabase } from '../utils/supabase'
+import type { washinglist } from '../types/supabase'
+import WashingTable from '@/components/washingtable'
+import AddWashingItem from '@/components/addwashingitem'
 
 export default function Overview() {
   // const [loading, setLoading] = useState<boolean>(true)
   const [profile, setProfile] = useState<any>(null)
   const router = useRouter()
+  const [washinglist, setWashinglist] = useState<washinglist[]>([])
 
   useEffect(() => {
     void fetchProfile()
@@ -19,14 +26,27 @@ export default function Overview() {
       setProfile(session)
   }
 
+  const getWashinglist = async () => {
+    const { data, error } = await supabase.from('washinglist').select()
+    if (!error && data)
+      setWashinglist(data)
+    else
+      setWashinglist([])
+  }
+
+  useEffect(() => {
+    getWashinglist()
+  }, [])
+
   if (!profile)
     return null
 
   return (
     <div>
-      <h1>Overview</h1>
-      <p>Name: {profile.data.user.email}</p>
-      <p>USER ID: {profile.data.user.id}</p>
+      <WashingTable washinglist={washinglist} />
+      <Flex justify="center" align="center" mt={10}>
+      <AddWashingItem />
+      </Flex>
     </div>
   )
 }

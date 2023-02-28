@@ -4,22 +4,30 @@ import { useState } from 'react'
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import type { Session } from '@supabase/auth-helpers-react'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
-import { ThemeProvider } from '@mui/material/styles'
-import { theme } from '../utils/theme'
-import Navbar from '@/components/navbar'
+import { useRouter } from 'next/router'
+import { ChakraProvider } from '@chakra-ui/react'
+import type { User } from '../types/user'
+import Navbartwo from '@/components/navbar'
+import Footer from '@/components/footer'
 
 export default function App({ Component, pageProps }: AppProps<{ initialSession: Session | null }>) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient())
+  const router = useRouter()
+  const { asPath } = router
+  const noNavbar = ['/sign-in']
+  // TODO: Remove this testobj and pass down real user object
+  const testobj: User = { email: 'Frede', id: '123' }
 
   return (
     <SessionContextProvider
       supabaseClient={supabaseClient}
       initialSession={pageProps.initialSession}
     >
-      <ThemeProvider theme={theme}>
-      <Navbar />
+      <ChakraProvider>
+      {noNavbar.includes(asPath) ? null : <Navbartwo userobj={testobj} />}
       <Component {...pageProps} />
-      </ThemeProvider>
+      <Footer/>
+      </ChakraProvider>
     </SessionContextProvider>
   )
 }

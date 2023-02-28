@@ -1,34 +1,27 @@
 import * as React from 'react'
-import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
-import CssBaseline from '@mui/material/CssBaseline'
-import TextField from '@mui/material/TextField'
-import Link from '@mui/material/Link'
-import Box from '@mui/material/Box'
-import LocalLaundryServiceIcon from '@mui/icons-material/LocalLaundryService'
-import Typography from '@mui/material/Typography'
-import Container from '@mui/material/Container'
 import { useState } from 'react'
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  HStack,
+  Heading,
+  Icon,
+  Input,
+  Stack,
+} from '@chakra-ui/react'
+import { CgSmartHomeWashMachine } from 'react-icons/cg'
 import { supabase } from '../utils/supabase'
-
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://github.com/Err0r51">
-        Err0r51
-      </Link>{' in '}
-      {new Date().getFullYear()}
-      {' @ Berkeley'}
-    </Typography>
-  )
-}
 
 export default function SignIn() {
   const [email, setEmail] = useState<string>('')
   const [submitted, setSubmitted] = useState<boolean>(false)
+  const isError = email === ''
 
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLInputElement>) => {
     event.preventDefault()
     if (await signIn())
       setSubmitted(true)
@@ -36,8 +29,7 @@ export default function SignIn() {
 
   async function signIn() {
     if (!email) {
-      // eslint-disable-next-line no-alert
-      alert('Please enter an email')
+      setSubmitted(false)
       return false
     }
     const { data, error } = await supabase.auth.signInWithOtp({
@@ -55,56 +47,44 @@ export default function SignIn() {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
+    <Container maxW="lg" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }}>
+    <Stack spacing="8">
+      <Stack spacing="8">
+        <HStack spacing="1" justify="center">
+        <Icon as={CgSmartHomeWashMachine} boxSize={10} />
+        <Heading color={'blue.500'} size={{ base: 'xs', md: 'lg' }}> Berkeley Washing </Heading>
+        </HStack>
+      </Stack>
       <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
+        py={{ base: '0', sm: '8' }}
+        px={{ base: '4', sm: '10' }}
+        bg={{ base: 'transparent', sm: 'bg-surface' }}
+        boxShadow={{ base: 'none', sm: 'md' }}
+        borderRadius={{ base: 'none', sm: 'xl' }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LocalLaundryServiceIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        {
-          submitted ?
-            <Typography component="h1" variant="h6" sx={{ mt: 3 }}>
-              Please check your email for a login link
-            </Typography> :
-            <Box component="form" onSubmit={(event) => {
-              void handleSubmit(event)
-            }} noValidate sx={{ mt: 1 }}>
-              <TextField
-                type="text"
-                onChange={e => setEmail(e.target.value)}
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-              />
-
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 2, mb: 2 }}
-              >
-                Sign In
-              </Button>
-
-            </Box>
-        }
+        <Stack spacing="8">
+        <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
+          <Heading size={{ base: 'xs', md: 'md' }}>Log in to your account</Heading>
+        </Stack> { submitted
+          ? (<Stack spacing={{ base: '2', md: '3' }} textAlign="center">
+            <Heading size={{ base: 'xs', md: 'xs' }}>Please check your mail for a Link</Heading>
+          </Stack>) :
+        <form onSubmit={event => handleSubmit(event)}>
+          <Stack spacing="10">
+            <FormControl isRequired isInvalid={isError}>
+              <FormLabel htmlFor="email">Email</FormLabel>
+              <Input id="email" type="email" placeholder='sportsmasters@berkeley.edu'
+               onChange={event => setEmail(event.currentTarget.value)} /> { !isError ? (<FormErrorMessage>Email is required.</FormErrorMessage>) : null }
+            </FormControl>
+            <Button colorScheme={'blue'} _hover={{
+              bg: 'blue.600',
+            }} type='submit'>Sign in</Button>
+          </Stack>
+          </form>
+          }
+        </Stack>
       </Box>
-      <Copyright sx={{ mt: 8, mb: 4 }} />
-    </Container>
+    </Stack>
+  </Container>
   )
 }
