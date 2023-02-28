@@ -1,4 +1,3 @@
-
 import {
   Button,
   Icon,
@@ -15,13 +14,12 @@ import { RiDeleteBin5Fill } from 'react-icons/ri'
 import { useState } from 'react'
 import { supabase } from '@/utils/supabase'
 
-export default function deleteItem(props: { id: string | null; washtype: string | null}) {
+export default function deleteItem(props: { id: string | null; washtype: string | null }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [loading, setLoading] = useState<boolean>(false)
 
   async function handleDelete() {
     setLoading(true)
-    console.log('delete', props.id)
     const { error } = await supabase.from('washinglist').delete().eq('id', props.id)
     if (error) {
       // eslint-disable-next-line no-console
@@ -35,14 +33,17 @@ export default function deleteItem(props: { id: string | null; washtype: string 
 
   return (
     <>
+      <Button variant='ghost' mr={3} onClick={onOpen}>
       <Icon as={RiDeleteBin5Fill} onClick={onOpen}></Icon>
+      </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
+
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Delete</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-          Do you really want to remove this <b>{props.washtype}</b> slot?
+            Do you really want to remove this <b>{props.washtype}</b> slot?
           </ModalBody>
 
           <ModalFooter>

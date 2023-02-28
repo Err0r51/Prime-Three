@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Flex,
+  Heading,
   Icon,
   Menu,
   Stack,
@@ -28,7 +29,10 @@ export default function Navbartwo({ userobj }: { userobj: User }) {
     <>
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-        <Icon as={CgSmartHomeWashMachine} boxSize={8} />
+        <Flex alignItems={'center'} >
+            <Icon as={CgSmartHomeWashMachine} boxSize={8} />
+            <Heading size={'md'}>Berkeley Washing</Heading>
+        </Flex>
         <p>Welcome back, { userobj ? username : 'mysterious stranger' } </p>
           <Flex alignItems={'center'}>
             <Stack direction={'row'} spacing={7}>

@@ -6,7 +6,7 @@ export default function Footer() {
     <Container as="footer" role="contentinfo" py={{ base: '12', md: '16' }}>
       <Center>
         <Stack spacing={{ base: '4', md: '5' }}>
-          <Stack justify="space-between" direction="row" align="center">
+          <Stack justify="center" direction="row" align="center">
             <ButtonGroup variant="ghost">
               <IconButton
                 as="a"

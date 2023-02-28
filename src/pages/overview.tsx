@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import {
+  Flex,
+} from '@chakra-ui/react'
 import { supabase } from '../utils/supabase'
 import type { washinglist } from '../types/supabase'
 import WashingTable from '@/components/washingtable'
@@ -41,7 +44,9 @@ export default function Overview() {
   return (
     <div>
       <WashingTable washinglist={washinglist} />
+      <Flex justify="center" align="center" mt={10}>
       <AddWashingItem />
+      </Flex>
     </div>
   )
 }
