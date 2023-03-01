@@ -9,12 +9,39 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          full_name: string | null
+          id: string
+          updated_at: string | null
+          username: string | null
+          website: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          full_name?: string | null
+          id: string
+          updated_at?: string | null
+          username?: string | null
+          website?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          full_name?: string | null
+          id?: string
+          updated_at?: string | null
+          username?: string | null
+          website?: string | null
+        }
+      }
       washinglist: {
         Row: {
           created_at: string | null
           id: number
           restricted: boolean | null
           urgency: string | null
+          user_id: string | null
           wash_type: string | null
         }
         Insert: {
@@ -22,6 +49,7 @@ export interface Database {
           id?: number
           restricted?: boolean | null
           urgency?: string | null
+          user_id?: string | null
           wash_type?: string | null
         }
         Update: {
@@ -29,6 +57,7 @@ export interface Database {
           id?: number
           restricted?: boolean | null
           urgency?: string | null
+          user_id?: string | null
           wash_type?: string | null
         }
       }
@@ -46,12 +75,4 @@ export interface Database {
       [_ in never]: never
     }
   }
-}
-
-export interface washinglist {
-  created_at: string | null
-  id?: string | null
-  restricted: boolean | null
-  urgency: string | null
-  wash_type: string | null
 }

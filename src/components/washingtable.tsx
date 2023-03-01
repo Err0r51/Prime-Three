@@ -8,8 +8,9 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react'
-import type { washinglist } from '../types/supabase'
+import type { Database } from '../types/supabase'
 import DeleteItem from '@/components/deletewashingitem'
+type washinglist = Database['public']['Tables']['washinglist']['Row']
 
 export default function WashingTable(props: { washinglist: washinglist[] }) {
   const washinglist = props.washinglist

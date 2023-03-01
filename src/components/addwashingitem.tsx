@@ -20,8 +20,9 @@ import {
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import { BsPlusCircleDotted } from 'react-icons/bs'
-import type { washinglist } from '../types/supabase'
+import type { Database } from '../types/supabase'
 import { supabase } from '../utils/supabase'
+type washinglist = Database['public']['Tables']['washinglist']['Insert']
 
 export default function AddWashingItem() {
   const { isOpen, onOpen, onClose } = useDisclosure()

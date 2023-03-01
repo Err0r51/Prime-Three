@@ -35,7 +35,7 @@ export default function SignIn() {
     const { data, error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_HOST}/overview`,
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_HOST}`,
       },
     })
     if (error) {
