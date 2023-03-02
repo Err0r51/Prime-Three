@@ -39,6 +39,7 @@ export interface Database {
         Row: {
           created_at: string | null
           id: number
+          other_user_id: string | null
           restricted: boolean | null
           urgency: string | null
           user_id: string | null

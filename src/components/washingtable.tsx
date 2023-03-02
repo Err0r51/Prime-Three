@@ -14,6 +14,7 @@ type washinglist = Database['public']['Tables']['washinglist']['Row']
 
 export default function WashingTable(props: { washinglist: washinglist[]; getWashinglist: () => void }) {
   const washinglist = props.washinglist
+  console.log('table', washinglist)
 
   function formatTime(time: string | null) {
     const usedTime = new Date(time!)
@@ -27,21 +28,22 @@ export default function WashingTable(props: { washinglist: washinglist[]; getWas
         <Table variant='unstyled'>
           <Thead>
             <Tr>
-              <Th>Created at</Th>
               <Th>Id</Th>
               <Th>Wash Type</Th>
-              <Th>Urgency</Th>
-              <Th>Restricted</Th>
+              <Th>To be washed until</Th>
+              <Th>Wash with boys?</Th>
+              <Th>Potential Washing Partners</Th>
+              <Th>Delete</Th>
             </Tr>
           </Thead>
           <Tbody>
             {washinglist.map(item => (
               <Tr key={item.id}>
-                <Td>{formatTime(item.created_at)}</Td>
                 <Td>{item.id}</Td>
                 <Td>{item.wash_type}</Td>
                 <Td>{formatTime(item.urgency)}</Td>
                 <Td>{item.restricted ? 'Yes' : 'No'}</Td>
+                <Td>{item.other_user_id}</Td>
                 <Td><DeleteItem getWashinglist={props.getWashinglist} id={item.id} washtype={item.wash_type} /></Td>
               </Tr>
             ))}

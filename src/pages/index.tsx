@@ -5,6 +5,7 @@ import {
 } from '@chakra-ui/react'
 import { supabase } from '../utils/supabase'
 import type { Database } from '../types/supabase'
+import type { match } from '@/types/match'
 import WashingTable from '@/components/washingtable'
 import AddWashingItem from '@/components/addwashingitem'
 type washinglist = Database['public']['Tables']['washinglist']['Row']
@@ -14,25 +15,28 @@ export default function Overview() {
   const [profile, setProfile] = useState<any>(null)
   const router = useRouter()
   const [washinglist, setWashinglist] = useState<washinglist[]>([])
+  const [matchinglist, setMatchinglist] = useState<match[]>([])
 
   useEffect(() => {
-    void fetchProfile()
+    async function fetchProfile() {
+      const session = await supabase.auth.getUser()
+      if (!session.data.user)
+        void router.push('/sign-in')
+      else
+        setProfile(session)
+    }
+    fetchProfile()
   }, [])
-
-  async function fetchProfile() {
-    const session = await supabase.auth.getUser()
-    if (!session.data.user)
-      void router.push('/sign-in')
-    else
-      setProfile(session)
-  }
 
   const getWashinglist = useCallback(async () => {
     const { data, error } = await supabase.from('washinglist').select()
-    if (!error && data)
+    if (!error && data) {
+      // console.log({ data })
       setWashinglist(data)
-    else
+    }
+    else {
       setWashinglist([])
+    }
   }, [])
 
   useEffect(() => {
@@ -40,16 +44,30 @@ export default function Overview() {
   }, [getWashinglist])
 
   const getMatchingItems = async () => {
-    const { data, error } = await supabase.rpc('get_washinglist', { user_id_input: '' })
-    if (error)
+    const { data, error } = await supabase.rpc('find_matching_washings', { user_id_input: '' })
+    if (!error && data) {
+      // console.log({ error })
+      setMatchinglist(data)
+      // console.log(matchinglist)
+    }
+    else {
+      // eslint-disable-next-line no-console
       console.log({ error })
-    else
-      console.log({ data })
+    }
   }
 
   useEffect(() => {
-    // TODO: Trigger this function when a new item is added
+    // TODO: Make this nicer
     getMatchingItems()
+    for (let i = 0; i < washinglist.length; i++) {
+      const obj1 = washinglist[i]
+      const obj2 = matchinglist.find(obj => obj.id === obj1.id)
+      if (obj2)
+        obj1.other_user_id = obj2.other_user_id
+    }
+    setWashinglist(washinglist)
+    // eslint-disable-next-line no-console
+    console.log(washinglist)
   }, [])
 
   if (!profile)
@@ -59,7 +77,7 @@ export default function Overview() {
     <div>
       <WashingTable washinglist={washinglist} getWashinglist={getWashinglist} />
       <Flex justify="center" align="center" mt={10}>
-        <AddWashingItem getWashinglist={getWashinglist}/>
+        <AddWashingItem getWashinglist={getWashinglist} />
       </Flex>
     </div>
   )
