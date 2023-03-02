@@ -24,7 +24,7 @@ import type { Database } from '../types/supabase'
 import { supabase } from '../utils/supabase'
 type washinglist = Database['public']['Tables']['washinglist']['Insert']
 
-export default function AddWashingItem() {
+export default function AddWashingItem(props: { getWashinglist: () => void }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [urgency, setUrgency] = useState<string>('')
   const [washingtype, setwashingtype] = useState<string>('')
@@ -77,6 +77,7 @@ export default function AddWashingItem() {
     }
     else {
       setLoading(false)
+      props.getWashinglist()
       onClose()
     }
   }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import {
   Flex,
@@ -27,23 +27,25 @@ export default function Overview() {
       setProfile(session)
   }
 
-  const getWashinglist = async () => {
+  const getWashinglist = useCallback(async () => {
     const { data, error } = await supabase.from('washinglist').select()
     if (!error && data)
       setWashinglist(data)
     else
       setWashinglist([])
-  }
+  }, [])
+
+  useEffect(() => {
+    getWashinglist()
+  }, [getWashinglist])
 
   const getMatchingItems = async () => {
     const { data, error } = await supabase.rpc('get_washinglist', { user_id_input: '' })
-    console.log(data)
+    if (error)
+      console.log({ error })
+    else
+      console.log({ data })
   }
-
-  useEffect(() => {
-    // TODO: Trigger this function when a new item is added
-    getWashinglist()
-  }, [])
 
   useEffect(() => {
     // TODO: Trigger this function when a new item is added
@@ -55,9 +57,9 @@ export default function Overview() {
 
   return (
     <div>
-      <WashingTable washinglist={washinglist} />
+      <WashingTable washinglist={washinglist} getWashinglist={getWashinglist} />
       <Flex justify="center" align="center" mt={10}>
-      <AddWashingItem />
+        <AddWashingItem getWashinglist={getWashinglist}/>
       </Flex>
     </div>
   )

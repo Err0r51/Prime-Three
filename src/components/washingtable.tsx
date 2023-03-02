@@ -12,11 +12,11 @@ import type { Database } from '../types/supabase'
 import DeleteItem from '@/components/deletewashingitem'
 type washinglist = Database['public']['Tables']['washinglist']['Row']
 
-export default function WashingTable(props: { washinglist: washinglist[] }) {
+export default function WashingTable(props: { washinglist: washinglist[]; getWashinglist: () => void }) {
   const washinglist = props.washinglist
 
   function formatTime(time: string | null) {
-    const usedTime = new Date(time)
+    const usedTime = new Date(time!)
     const date = new Intl.DateTimeFormat('en-US', { dateStyle: 'full', timeStyle: 'short', timeZone: 'UTC' }).format(usedTime)
     return date.toLocaleString()
   }
@@ -42,7 +42,7 @@ export default function WashingTable(props: { washinglist: washinglist[] }) {
                 <Td>{item.wash_type}</Td>
                 <Td>{formatTime(item.urgency)}</Td>
                 <Td>{item.restricted ? 'Yes' : 'No'}</Td>
-                <Td><DeleteItem id={item.id} washtype={item.wash_type} /></Td>
+                <Td><DeleteItem getWashinglist={props.getWashinglist} id={item.id} washtype={item.wash_type} /></Td>
               </Tr>
             ))}
           </Tbody>
