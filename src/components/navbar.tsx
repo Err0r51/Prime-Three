@@ -25,11 +25,15 @@ export default function Navbartwo({ userobj }: { userobj: User }) {
     void router.push('/sign-in')
   }
 
+  async function toHome() {
+    void router.push('/')
+  }
+
   return (
     <>
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-        <Flex alignItems={'center'} >
+        <Flex alignItems={'center'} cursor="pointer" onClick={toHome} >
             <Icon as={CgSmartHomeWashMachine} boxSize={8} />
             <Heading size={'md'}>Berkeley Washing</Heading>
         </Flex>
