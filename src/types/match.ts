@@ -1,7 +1,8 @@
 export interface match {
-  id: number | null
-  other_user_id: string | null
-  other_wash_type: string | null
-  other_restricted: boolean | null
+  id: string
+  match_user_id: string | null
+  restricted: boolean | null
   urgency: string | null
+  user_id: string | null
+  wash_type: string | null
 }

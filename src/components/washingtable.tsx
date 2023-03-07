@@ -8,13 +8,12 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react'
-import type { Database } from '../types/supabase'
+import type { match } from '../types/match'
 import DeleteItem from '@/components/deletewashingitem'
-type washinglist = Database['public']['Tables']['washinglist']['Row']
 
-export default function WashingTable(props: { washinglist: washinglist[]; getWashinglist: () => void }) {
+export default function WashingTable(props: { washinglist: match[]; getWashinglist: () => void }) {
   const washinglist = props.washinglist
-  console.log('table', washinglist)
+  // console.log('table', washinglist)
 
   function formatTime(time: string | null) {
     const usedTime = new Date(time!)
@@ -43,7 +42,7 @@ export default function WashingTable(props: { washinglist: washinglist[]; getWas
                 <Td>{item.wash_type}</Td>
                 <Td>{formatTime(item.urgency)}</Td>
                 <Td>{item.restricted ? 'Yes' : 'No'}</Td>
-                <Td>{item.other_user_id}</Td>
+                <Td>{item.match_user_id}</Td>
                 <Td><DeleteItem getWashinglist={props.getWashinglist} id={item.id} washtype={item.wash_type} /></Td>
               </Tr>
             ))}

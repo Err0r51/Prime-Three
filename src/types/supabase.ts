@@ -39,10 +39,9 @@ export interface Database {
         Row: {
           created_at: string | null
           id: number
-          other_user_id: string | null
           restricted: boolean | null
           urgency: string | null
-          user_id: string | null
+          user_id: string
           wash_type: string | null
         }
         Insert: {
@@ -50,7 +49,7 @@ export interface Database {
           id?: number
           restricted?: boolean | null
           urgency?: string | null
-          user_id?: string | null
+          user_id?: string
           wash_type?: string | null
         }
         Update: {
@@ -58,7 +57,7 @@ export interface Database {
           id?: number
           restricted?: boolean | null
           urgency?: string | null
-          user_id?: string | null
+          user_id?: string
           wash_type?: string | null
         }
       }
@@ -67,7 +66,35 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      find_matching_washings: {
+        Args: {
+          user_id_input: string
+        }
+        Returns: {
+          id: number
+          user_id: string
+          wash_type: string
+          restricted: boolean
+          urgency: string
+          match_user_id: string
+        }[]
+      }
+      get_washinglist: {
+        Args: {
+          user_id_input: string
+        }
+        Returns: {
+          id: number
+          user_id: string
+          wash_type: string
+          restricted: boolean
+          urgency: string
+          other_user_id: string
+          other_wash_type: string
+          other_restricted: boolean
+          other_urgency: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
