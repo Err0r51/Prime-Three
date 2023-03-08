@@ -6,7 +6,6 @@ import type { Session } from '@supabase/auth-helpers-react'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
 import { useRouter } from 'next/router'
 import { ChakraProvider } from '@chakra-ui/react'
-import type { User } from '../types/user'
 import Navbartwo from '@/components/navbar'
 import Footer from '@/components/footer'
 
@@ -16,7 +15,6 @@ export default function App({ Component, pageProps }: AppProps<{ initialSession:
   const { asPath } = router
   const noNavbar = ['/sign-in']
   // TODO: Remove this testobj and pass down real user object
-  const testobj: User = { email: 'Frede', id: '123' }
 
   return (
     <SessionContextProvider
@@ -24,7 +22,7 @@ export default function App({ Component, pageProps }: AppProps<{ initialSession:
       initialSession={pageProps.initialSession}
     >
       <ChakraProvider>
-      {noNavbar.includes(asPath) ? null : <Navbartwo userobj={testobj} />}
+      {noNavbar.includes(asPath) ? null : <Navbartwo />}
       <Component {...pageProps} />
       <Footer/>
       </ChakraProvider>
