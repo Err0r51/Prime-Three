@@ -71,28 +71,12 @@ export interface Database {
           user_id_input: string
         }
         Returns: {
-          id: number
+          id: string
           user_id: string
           wash_type: string
           restricted: boolean
           urgency: string
           match_user_id: string
-        }[]
-      }
-      get_washinglist: {
-        Args: {
-          user_id_input: string
-        }
-        Returns: {
-          id: number
-          user_id: string
-          wash_type: string
-          restricted: boolean
-          urgency: string
-          other_user_id: string
-          other_wash_type: string
-          other_restricted: boolean
-          other_urgency: string
         }[]
       }
     }

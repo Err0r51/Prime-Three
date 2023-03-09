@@ -4,11 +4,11 @@ import { Flex } from '@chakra-ui/react'
 import { useUser } from '@supabase/auth-helpers-react'
 import { supabase } from '../utils/supabase'
 import type { match } from '@/types/match'
-// import { Database } from '@/types/supabase'
+import type { Database } from '@/types/supabase'
 import Navbar from '@/components/navbar'
 import WashingTable from '@/components/washingtable'
 import AddWashingItem from '@/components/addwashingitem'
-// type washinglist = Database['public']['Functions']['washinglist']['Insert']
+type washinglist = Database['public']['Functions']['find_matching_washings']
 
 export default function Overview() {
   const [profile, setProfile] = useState<any>(null)
@@ -28,8 +28,8 @@ export default function Overview() {
   }, [])
 
   const getMatchingItems = useCallback(async () => {
-    const session = await supabase.auth.getUser()
-    const { data, error } = await supabase.rpc<never, never>('find_matching_washings', { user_id_input: user!.id })
+    // @ts-expect-error still figuring out this one
+    const { data, error } = await supabase.rpc<washinglist, never>('find_matching_washings', { user_id_input: user!.id })
     if (!error && data) {
       setMatchinglist(data)
     }
