@@ -30,7 +30,7 @@ export default function WashingTable(props: { washinglist: match[]; getWashingli
               <Th>Id</Th>
               <Th>Wash Type</Th>
               <Th>To be washed until</Th>
-              <Th>Wash with boys?</Th>
+              <Th>Gender restricted?</Th>
               <Th>Potential Washing Partners</Th>
               <Th>Delete</Th>
             </Tr>

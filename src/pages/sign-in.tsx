@@ -21,7 +21,7 @@ export default function SignIn() {
   const [submitted, setSubmitted] = useState<boolean>(false)
   const isError = email === ''
 
-  const handleSubmit = async (event: React.FormEvent<HTMLInputElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (await signIn())
       setSubmitted(true)
@@ -32,7 +32,7 @@ export default function SignIn() {
       setSubmitted(false)
       return false
     }
-    const { data, error } = await supabase.auth.signInWithOtp({
+    const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
         emailRedirectTo: `${process.env.NEXT_PUBLIC_HOST}`,

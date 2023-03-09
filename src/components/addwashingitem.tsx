@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Flex,
   FormControl,
@@ -89,38 +90,43 @@ export default function AddWashingItem(props: { getWashinglist: () => void }) {
         color={'white'}
         bg={'blue.400'} onClick={onOpen}><Icon as={BsPlusCircleDotted} marginRight={2} boxSize={4} />New</Button>
 
-      <Modal isOpen={isOpen} onClose={onClose} size='full'>
+      <Modal isOpen={isOpen} onClose={onClose} size='lg'>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Add a new Washing Request</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Flex direction='column' pt={1} justifyContent={'flex-end'}>
+            <Flex direction='column' pt={2} justifyContent={'flex-end'}>
               <FormControl isRequired >
-                <FormLabel htmlFor='gender-restricted' mb='0'>
-                  Please select your washing type
+                <Box mb="5">
+                  <FormLabel fontSize={'lg'} htmlFor='gender-restricted' mb='0'>
+                    Please select your washing type
+                  </FormLabel>
+                  <Select placeholder='Type' value={washingtype} onChange={ev => setwashingtype(ev.target.value)} isRequired>
+                    <option value='White'>White</option>
+                    <option value='Underwear'>Underwear</option>
+                    <option value='Multi Colored-wash'>Multi Colored</option>
+                    <option value='Sheets & Towels'>Sheets & Towels</option>
+                  </Select>
+                </Box>
+                <Box mb="5">
+                  <FormLabel fontSize={'lg'} htmlFor='gender-restricted' mb='0'>
+                    How urgent is this?
+                  </FormLabel>
+                  <RadioGroup onChange={setUrgency} value={urgency}>
+                    <Stack direction='row'>
+                      <Radio value='Urgent'>Urgent</Radio>
+                      <Radio value='Soon'>Soon</Radio>
+                      <Radio value='Coming up'>Coming up</Radio>
+                    </Stack>
+                  </RadioGroup>
+                </Box>
+                <FormLabel fontSize={'lg'} htmlFor='gender-restricted' mb='0'>
+                  Do you want to to wash with the boys?
                 </FormLabel>
-                <Select placeholder='Type' value={washingtype} onChange={ev => setwashingtype(ev.target.value)} isRequired>
-                  <option value='White'>White</option>
-                  <option value='Underwear'>Underwear</option>
-                  <option value='Multi Colored-wash'>Multi Colored</option>
-                  <option value='Sheets & Towels'>Sheets & Towels</option>
-                </Select>
-                <FormLabel htmlFor='gender-restricted' mb='0'>
-                  How urgent is this?
-                </FormLabel>
-                <RadioGroup onChange={setUrgency} value={urgency}>
-                  <Stack direction='row'>
-                    <Radio value='Urgent'>Urgent</Radio>
-                    <Radio value='Soon'>Soon</Radio>
-                    <Radio value='Coming up'>Coming up</Radio>
-                  </Stack>
-                </RadioGroup>
-                <FormLabel htmlFor='gender-restricted' mb='0'>
-                  Do you want to not want to wash with the boys?
-                </FormLabel>
-                <Switch id='gender-restricted' onChange={handleToggle} />
+                <Switch id='gender-restricted' onChange={handleToggle} />  {genderRestriction ? 'No' : 'Yes'}
               </FormControl>
+
             </Flex>
           </ModalBody>
 
