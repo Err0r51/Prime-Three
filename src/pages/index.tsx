@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import {
-  Flex,
-} from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
+import { useUser } from '@supabase/auth-helpers-react'
 import { supabase } from '../utils/supabase'
 import type { match } from '@/types/match'
 // import { Database } from '@/types/supabase'
+import Navbar from '@/components/navbar'
 import WashingTable from '@/components/washingtable'
 import AddWashingItem from '@/components/addwashingitem'
 // type washinglist = Database['public']['Functions']['washinglist']['Insert']
@@ -13,6 +13,7 @@ import AddWashingItem from '@/components/addwashingitem'
 export default function Overview() {
   const [profile, setProfile] = useState<any>(null)
   const router = useRouter()
+  const user = useUser()
   const [matchinglist, setMatchinglist] = useState<match[]>([])
 
   useEffect(() => {
@@ -22,16 +23,13 @@ export default function Overview() {
         void router.push('/sign-in')
       else
         setProfile(session)
-        // console.log(profile.data.user.id)
     }
     fetchProfile()
   }, [])
 
   const getMatchingItems = useCallback(async () => {
-    // TODO: Get user id from table
     const session = await supabase.auth.getUser()
-    const userId = session.data.user?.id
-    const { data, error } = await supabase.rpc<never, never>('find_matching_washings', { user_id_input: userId })
+    const { data, error } = await supabase.rpc<never, never>('find_matching_washings', { user_id_input: user!.id })
     if (!error && data) {
       setMatchinglist(data)
     }
@@ -50,6 +48,7 @@ export default function Overview() {
 
   return (
     <div>
+      <Navbar />
       <WashingTable washinglist={matchinglist} getWashinglist={getMatchingItems} />
       <Flex justify="center" align="center" mt={10}>
         <AddWashingItem getWashinglist={getMatchingItems} />

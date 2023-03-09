@@ -14,13 +14,12 @@ import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 import { CgSmartHomeWashMachine } from 'react-icons/cg'
 import { FaUserCircle } from 'react-icons/fa'
 import { useRouter } from 'next/router'
-import type { Session } from '@supabase/auth-helpers-react'
-import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
+import { useUser } from '@supabase/auth-helpers-react'
 import { supabase } from '../utils/supabase'
 import type { Database } from '../types/supabase'
 type Profiles = Database['public']['Tables']['profiles']['Row']
 
-export default function Navbartwo({ session }: { session: Session }) {
+export default function Navbar() {
   const { colorMode, toggleColorMode } = useColorMode()
   const router = useRouter()
   const user = useUser()
@@ -28,7 +27,7 @@ export default function Navbartwo({ session }: { session: Session }) {
 
   useEffect(() => {
     getProfile()
-  }, [session])
+  }, [user])
 
   async function getProfile() {
     try {
@@ -44,12 +43,13 @@ export default function Navbartwo({ session }: { session: Session }) {
       if (error && status !== 406)
         throw error
 
+      if (!data?.username)
+        void router.push('/account')
+
       if (data)
         setUsername(data.username)
     }
     catch (error) {
-      // eslint-disable-next-line no-alert
-      alert('Error loading user data!')
       // eslint-disable-next-line no-console
       console.log(error)
     }
@@ -75,10 +75,9 @@ export default function Navbartwo({ session }: { session: Session }) {
           <Flex alignItems={'center'} cursor="pointer" onClick={toHome} >
             <Icon as={CgSmartHomeWashMachine} boxSize={8} />
             <Heading size={'md'}>Berkeley Washing</Heading>
-          </Flex>
-          <p>Welcome back, { username } </p>
+          </Flex> {username ? <p>Welcome {username} </p> : <p>Please setup your account</p>}
           <Flex alignItems={'center'}>
-            <Stack direction={'row'} spacing={7}>
+            <Stack direction={'row'} spacing={3}>
               <Button onClick={toggleColorMode}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
