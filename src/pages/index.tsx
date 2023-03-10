@@ -19,15 +19,17 @@ export default function Overview() {
   useEffect(() => {
     async function fetchProfile() {
       const session = await supabase.auth.getUser()
+      console.log(session)
       if (!session.data.user)
         void router.push('/sign-in')
       else
         setProfile(session)
     }
     fetchProfile()
-  }, [])
+  }, [user])
 
   const getMatchingItems = useCallback(async () => {
+    console.log(profile)
     // @ts-expect-error still figuring out this one
     const { data, error } = await supabase.rpc<washinglist, never>('find_matching_washings', { user_id_input: user!.id })
     if (!error && data) {
