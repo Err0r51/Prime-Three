@@ -5,4 +5,5 @@ export interface match {
   urgency: string | null
   user_id: string | null
   wash_type: string | null
+  matching_username: string | null
 }

@@ -45,6 +45,8 @@ export default function Account({ session }: { session: Session }) {
         .eq('id', user.id)
         .single()
 
+        console.log(data)
+
       if (error && status !== 406)
         throw error
 
@@ -80,6 +82,8 @@ export default function Account({ session }: { session: Session }) {
         gender,
         updated_at: new Date().toISOString(),
       }
+
+      console.log(updates)
 
       const { error } = await supabase.from('profiles').upsert(updates)
       if (error)
