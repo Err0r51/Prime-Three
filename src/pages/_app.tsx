@@ -5,7 +5,6 @@ import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import type { Session } from '@supabase/auth-helpers-react'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
 import { ChakraProvider } from '@chakra-ui/react'
-import Footer from '@/components/footer'
 
 export default function App({ Component, pageProps }: AppProps<{ initialSession: Session | null }>) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient())
@@ -16,7 +15,6 @@ export default function App({ Component, pageProps }: AppProps<{ initialSession:
     >
       <ChakraProvider>
       <Component {...pageProps} />
-      <Footer/>
       </ChakraProvider>
     </SessionContextProvider>
   )

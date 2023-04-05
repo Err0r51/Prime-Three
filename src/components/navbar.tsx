@@ -27,7 +27,7 @@ export default function Navbar() {
 
   useEffect(() => {
     getProfile()
-  }, [user])
+  }, [username])
 
   async function getProfile() {
     try {
@@ -69,7 +69,7 @@ export default function Navbar() {
   }
 
   return (
-    <>
+    <div>
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <Flex alignItems={'center'} cursor="pointer" onClick={toHome} >
@@ -82,7 +82,6 @@ export default function Navbar() {
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
               <Button onClick={toAccount}><FaUserCircle></FaUserCircle></Button>
-
               <Menu>
                 <Button
                   as={'a'}
@@ -101,6 +100,6 @@ export default function Navbar() {
           </Flex>
         </Flex>
       </Box>
-    </>
+    </div>
   )
 }

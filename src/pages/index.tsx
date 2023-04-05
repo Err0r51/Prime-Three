@@ -4,11 +4,10 @@ import { Flex } from '@chakra-ui/react'
 import { useUser } from '@supabase/auth-helpers-react'
 import { supabase } from '../utils/supabase'
 import type { match } from '@/types/match'
-import type { Database } from '@/types/supabase'
 import Navbar from '@/components/navbar'
 import WashingTable from '@/components/washingtable'
 import AddWashingItem from '@/components/addwashingitem'
-type washinglist = Database['public']['Functions']['find_matching_washings']
+import Footer from '@/components/footer'
 
 export default function Overview() {
   const [profile, setProfile] = useState<any>(null)
@@ -20,16 +19,18 @@ export default function Overview() {
     async function fetchProfile() {
       const session = await supabase.auth.getUser()
       if (!session.data.user)
+        // void router.push('/account')
         void router.push('/sign-in')
       else
         setProfile(session)
     }
     fetchProfile()
-  }, [])
+  }, [user])
 
   const getMatchingItems = useCallback(async () => {
-    // @ts-expect-error still figuring out this one
-    const { data, error } = await supabase.rpc<washinglist, never>('find_matching_washings', { user_id_input: user!.id })
+    if (!user)
+      return
+    const { data, error } = await supabase.rpc('find_matching_washings', { user_id_input: user!.id })
     if (!error && data) {
       setMatchinglist(data)
     }
@@ -37,21 +38,24 @@ export default function Overview() {
       // eslint-disable-next-line no-console
       console.log({ error })
     }
-  }, [])
+  }, [user])
 
   useEffect(() => {
     getMatchingItems()
-  }, [])
+  }, [user])
 
   if (!profile)
     return null
 
   return (
     <div>
-      <Navbar />
-      <WashingTable washinglist={matchinglist} getWashinglist={getMatchingItems} />
-      <Flex justify="center" align="center" mt={10}>
-        <AddWashingItem getWashinglist={getMatchingItems} />
+      <Flex direction="column">
+        <Navbar />
+        <WashingTable washinglist={matchinglist} getWashinglist={getMatchingItems} />
+        <Flex justify="center" align="center" mt={10}>
+          <AddWashingItem getWashinglist={getMatchingItems} />
+        </Flex>
+        <Footer />
       </Flex>
     </div>
   )
