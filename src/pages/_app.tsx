@@ -16,7 +16,6 @@ export default function App({ Component, pageProps }: AppProps<{ initialSession:
     >
       <ChakraProvider>
       <Component {...pageProps} />
-      <Footer/>
       </ChakraProvider>
     </SessionContextProvider>
   )

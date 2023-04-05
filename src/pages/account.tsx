@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardBody, CardHeader, CloseButton, Flex, Heading, Icon, Input, Stack, StackDivider, Switch, Text, useToast } from '@chakra-ui/react'
+import { Box, Button, Card, CardBody, CardHeader, CloseButton, Flex, Heading, Icon, Input, Radio, RadioGroup, Stack, StackDivider, Switch, Text, useToast } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import type { Session } from '@supabase/auth-helpers-react'
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
@@ -45,8 +45,6 @@ export default function Account({ session }: { session: Session }) {
         .eq('id', user.id)
         .single()
 
-        console.log(data)
-
       if (error && status !== 406)
         throw error
 
@@ -83,8 +81,6 @@ export default function Account({ session }: { session: Session }) {
         updated_at: new Date().toISOString(),
       }
 
-      console.log(updates)
-
       const { error } = await supabase.from('profiles').upsert(updates)
       if (error)
         throw error
@@ -102,13 +98,12 @@ export default function Account({ session }: { session: Session }) {
     <div>
       <Navbar />
       <Flex p="5" justify="center" align="content-center">
-
         <Card minWidth={'md'} >
           <Flex alignItems={'center'} justifyContent={'space-between'}>
-          <CardHeader>
-            <Heading size='md'>User information </Heading>
-          </CardHeader>
-          {!username ? null : <CloseButton onClick={() => router.push('/')} mr={3}/>}
+            <CardHeader>
+              <Heading size='md'>User information </Heading>
+            </CardHeader>
+            {!username ? null : <CloseButton onClick={() => router.push('/')} mr={3} />}
           </Flex>
           <CardBody>
             <Stack divider={<StackDivider />} spacing='4'>
@@ -131,30 +126,35 @@ export default function Account({ session }: { session: Session }) {
                 <Heading size='xs' textTransform='uppercase'>
                   Gender
                 </Heading>
-                <Flex alignItems={'center'} justifyContent={'space-between'}>
-                  <Switch pt={3} id='gender' onChange={handleGenderChange} />
-                  {gender}
-                </Flex>
-              </Box>
-              <Button
-                className="button primary block"
-                onClick={() => {
-                  updateProfile({ username, gender })
-                  toast({ title: 'Profile updated', status: 'success', duration: 3000, isClosable: true })
-                }}
-                disabled={loading}
-                color={'white'}
-                bg={'blue.400'}
-                _hover={{
-                  bg: 'blue.600',
-                }}
-              >
-                {loading ? 'Loading ...' : 'Update'}
-              </Button>
-            </Stack>
-          </CardBody>
-        </Card>
-      </Flex>
-    </div>
+                <Flex alignItems={'center'} justifyContent={'space-between'} mt={3}>
+                  <RadioGroup onChange={handleGenderChange} value={gender}>
+                  <Stack direction="row">
+                    <Radio value='male'>Male</Radio>
+                    <Radio value='female'>Female</Radio>
+                  </Stack>
+                </RadioGroup>
+
+              </Flex>
+            </Box>
+            <Button
+              className="button primary block"
+              onClick={() => {
+                updateProfile({ username, gender })
+                toast({ title: 'Profile updated', status: 'success', duration: 3000, isClosable: true })
+              }}
+              disabled={loading}
+              color={'white'}
+              bg={'blue.400'}
+              _hover={{
+                bg: 'blue.600',
+              }}
+            >
+              {loading ? 'Loading ...' : 'Update'}
+            </Button>
+          </Stack>
+        </CardBody>
+      </Card>
+    </Flex>
+    </div >
   )
 }

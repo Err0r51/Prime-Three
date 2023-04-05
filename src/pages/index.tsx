@@ -7,6 +7,7 @@ import type { match } from '@/types/match'
 import Navbar from '@/components/navbar'
 import WashingTable from '@/components/washingtable'
 import AddWashingItem from '@/components/addwashingitem'
+import Footer from '@/components/footer'
 
 export default function Overview() {
   const [profile, setProfile] = useState<any>(null)
@@ -18,10 +19,10 @@ export default function Overview() {
     async function fetchProfile() {
       const session = await supabase.auth.getUser()
       if (!session.data.user)
+        // void router.push('/account')
         void router.push('/sign-in')
       else
         setProfile(session)
-        console.log(session)
     }
     fetchProfile()
   }, [user])
@@ -48,10 +49,13 @@ export default function Overview() {
 
   return (
     <div>
-      <Navbar />
-      <WashingTable washinglist={matchinglist} getWashinglist={getMatchingItems} />
-      <Flex justify="center" align="center" mt={10}>
-        <AddWashingItem getWashinglist={getMatchingItems} />
+      <Flex direction="column">
+        <Navbar />
+        <WashingTable washinglist={matchinglist} getWashinglist={getMatchingItems} />
+        <Flex justify="center" align="center" mt={10}>
+          <AddWashingItem getWashinglist={getMatchingItems} />
+        </Flex>
+        <Footer />
       </Flex>
     </div>
   )
