@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardBody, CardHeader, CloseButton, Flex, Heading, Icon, Input, Radio, RadioGroup, Stack, StackDivider, Switch, Text, useToast } from '@chakra-ui/react'
+import { Box, Button, Card, CardBody, CardHeader, CloseButton, Flex, Heading, Icon, Input, Radio, RadioGroup, Stack, StackDivider, Text, useToast } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import type { Session } from '@supabase/auth-helpers-react'
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
@@ -127,7 +127,7 @@ export default function Account({ session }: { session: Session }) {
                   Gender
                 </Heading>
                 <Flex alignItems={'center'} justifyContent={'space-between'} mt={3}>
-                  <RadioGroup onChange={handleGenderChange} value={gender}>
+                  <RadioGroup onChange={handleGenderChange} value={gender ?? undefined}>
                   <Stack direction="row">
                     <Radio value='male'>Male</Radio>
                     <Radio value='female'>Female</Radio>

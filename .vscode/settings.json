@@ -15,5 +15,6 @@
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "typescript.preferences.quoteStyle": "single",
   "editor.detectIndentation": true,
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

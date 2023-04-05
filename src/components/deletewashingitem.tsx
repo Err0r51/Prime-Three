@@ -14,7 +14,7 @@ import { RiDeleteBin5Fill } from 'react-icons/ri'
 import { useState } from 'react'
 import { supabase } from '@/utils/supabase'
 
-export default function deleteItem(props: { id: string | null; washtype: string | null; getWashinglist: () => void }) {
+export default function deleteItem(props: { id: number | null; washtype: string | null; getWashinglist: () => void }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [loading, setLoading] = useState<boolean>(false)
 

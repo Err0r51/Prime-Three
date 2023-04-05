@@ -1,5 +1,5 @@
 export interface match {
-  id: string
+  id: number
   match_user_id: string | null
   restricted: boolean | null
   urgency: string | null
