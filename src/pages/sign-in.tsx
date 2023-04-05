@@ -20,6 +20,8 @@ export default function SignIn() {
   const [email, setEmail] = useState<string>('')
   const [submitted, setSubmitted] = useState<boolean>(false)
   const isError = email === ''
+  const isHosted = Boolean(process.env.NEXT_PUBLIC_VERCEL_ENV)
+  const host = isHosted ? process.env.NEXT_PUBLIC_VERCEL_URL : process.env.NEXT_PUBLIC_HOST
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -35,7 +37,7 @@ export default function SignIn() {
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_HOST}`,
+        emailRedirectTo: host,
       },
     })
     if (error) {
