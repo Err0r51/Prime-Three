@@ -36,7 +36,7 @@
     "@antfu/eslint-config-react": "^0.35.2",
     "@typescript-eslint/eslint-plugin": "^5.53.0",
     "@typescript-eslint/parser": "^5.53.0",
-    "eslint": "^8.34.0",
+    "eslint": "^9.0.0",
     "eslint-plugin-react": "^7.32.2",
     "supabase": "^1.38.7"
   }
